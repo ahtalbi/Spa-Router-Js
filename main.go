@@ -18,7 +18,7 @@ func main() {
 		path := filepath.Join(public, filepath.Clean(r.URL.Path))
 
 		if info, err := os.Stat(path); err == nil {
-			if info.IsDir() {
+			if info.IsDir() && r.URL.Path != "/" {
 				http.NotFound(w, r)
 				return
 			}
