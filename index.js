@@ -1,6 +1,6 @@
 import { Router } from "./router.js";
 
-let app = document.getElementById("app");
+let app = document.getElementById("app")
 
 let router = new Router()
 .on("/", () => app.innerHTML = "<h1>Home</h1>")

@@ -7,8 +7,8 @@ export class Router extends EventTarget {
     }
 
     navigate(path, { history = "push" } = {}) {
-        const p = path.startsWith("/") ? path : "/" + path;
-        return navigation.navigate(p, { history });
+        path = path.startsWith("/") ? path : "/" + path;
+        return navigation.navigate(path, { history });
     }
 
     listen({ autoFire = true } = {}) {
@@ -29,6 +29,9 @@ export class Router extends EventTarget {
             });
         });
 
+        if (autoFire) {
+            this.navigate(location.pathname, { history: "replace" });
+        }
 
         return this;
     }
