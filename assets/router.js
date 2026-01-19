@@ -1,4 +1,4 @@
-export class Router extends EventTarget {
+export class Router {
     #Routes = Object.create(null);
 
     on(path, handler) {
@@ -11,7 +11,7 @@ export class Router extends EventTarget {
         return navigation.navigate(path, { history });
     }
 
-    listen({ autoFire = true } = {}) {
+    listen(onError404, { autoFire = true } = {}) {
         navigation.addEventListener("navigate", (event) => {
             const url = new URL(event.destination.url);
 
@@ -21,7 +21,7 @@ export class Router extends EventTarget {
 
                     const fn = this.#Routes[url.pathname];
                     if (!fn) {
-                        document.body.innerHTML = `<h1>404</h1><p>${url.pathname}</p>`;
+                        onError404();
                         return;
                     }
                     fn({ url });
